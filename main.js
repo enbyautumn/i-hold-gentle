@@ -2,8 +2,11 @@
 let canvas = document.getElementById("canvas")
 let ctx = canvas.getContext("2d")
 
-canvas.width = 612
-canvas.height = 408
+let scale = 2
+
+canvas.width = 612 * scale
+canvas.height = 408 * scale
+ctx.scale(scale, scale)
 
 let bottomLayerPreload = new Image()
 bottomLayerPreload.src = "bottom-layer.png"

@@ -86,4 +86,5 @@ document.onpaste = (evt) => {
         main(URL.createObjectURL(file))
     }
 };
-  
+
+window.onload = () => main("https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/scottish-highland-cow-trossachs-grant-glendinning.jpg")

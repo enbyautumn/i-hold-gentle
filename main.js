@@ -2,7 +2,7 @@
 let canvas = document.getElementById("canvas")
 let ctx = canvas.getContext("2d")
 
-let scale = 1.2
+let scale = 1
 let padding = 50
 
 canvas.width = 612 * scale
@@ -46,9 +46,13 @@ async function main(url) {
     }
 
     ctx.fillStyle = "white"
-    ctx.fillRect(0, -(padding * scale), canvas.width, canvas.height)
     ctx.drawImage(bottomLayer, 0, 0)
+    ctx.fillRect(0, -(padding * scale), canvas.width, padding)
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+    ctx.shadowBlur = 15 * scale;
+    ctx.shadowOffsetY = 2 * scale;
     ctx.drawImage(hold, centerX - ((hold.width / scalar) / 2), bottomY, (hold.width / scalar), -(hold.height / scalar))
+    ctx.shadowColor = 'rgba(0, 0, 0, 0)';
     ctx.drawImage(topLayer, 0, 0)
 
     return true

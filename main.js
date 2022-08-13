@@ -2,10 +2,12 @@
 let canvas = document.getElementById("canvas")
 let ctx = canvas.getContext("2d")
 
-let scale = 2
+let scale = 1.2
+let padding = 50
 
 canvas.width = 612 * scale
-canvas.height = 408 * scale
+canvas.height = 408 * scale + (padding * scale)
+ctx.translate(0, padding * scale)
 ctx.scale(scale, scale)
 
 let bottomLayerPreload = new Image()
@@ -43,6 +45,8 @@ async function main(url) {
         scalar = hold.width / maxWidth
     }
 
+    ctx.fillStyle = "white"
+    ctx.fillRect(0, -(padding * scale), canvas.width, canvas.height)
     ctx.drawImage(bottomLayer, 0, 0)
     ctx.drawImage(hold, centerX - ((hold.width / scalar) / 2), bottomY, (hold.width / scalar), -(hold.height / scalar))
     ctx.drawImage(topLayer, 0, 0)

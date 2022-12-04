@@ -3,18 +3,18 @@ let canvas = document.getElementById("canvas")
 let ctx = canvas.getContext("2d")
 
 let scale = 1
-let padding = 50
+let padding = 0
 
-canvas.width = 612 * scale
-canvas.height = 408 * scale + (padding * scale)
-ctx.translate(0, padding * scale)
-ctx.scale(scale, scale)
+// canvas.width = 612 * scale
+// canvas.height = 408 * scale + (padding * scale)
+// ctx.translate(0, padding * scale)
+// ctx.scale(scale, scale)
 
-let bottomLayerPreload = new Image()
-bottomLayerPreload.src = "bottom-layer.png"
+// let bottomLayerPreload = new Image()
+// bottomLayerPreload.src = "bottom-layer.png"
 
 let topLayerPreload = new Image()
-topLayerPreload.src = "top-layer.png"
+topLayerPreload.src = "gent.png"
 
 let centerX = 335
 let maxWidth = 250
@@ -33,27 +33,24 @@ function waitForLoad(url) {
 
 async function main(url) {
     console.log(url)
-    let topLayer = await waitForLoad("top-layer.png")
-    let bottomLayer = await waitForLoad("bottom-layer.png")
+    let topLayer = await waitForLoad("gent.png")
+    // let bottomLayer = await waitForLoad("bottom-layer.png")
 
     let hold = await waitForLoad(url)
 
-    let scalar;
-    if (hold.height > hold.width) {
-        scalar = hold.height / maxHeight
-    } else {
-        scalar = hold.width / maxWidth
-    }
+    canvas.width = hold.width;
+    canvas.height = hold.height;
 
     ctx.fillStyle = "white"
-    ctx.drawImage(bottomLayer, 0, 0)
-    ctx.fillRect(0, -(padding * scale), canvas.width, padding)
+    ctx.shadowColor = 'rgba(0, 0, 0, 0)';
+    ctx.drawImage(hold, 0, 0, canvas.width, canvas.height)
     ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
     ctx.shadowBlur = 15 * scale;
     ctx.shadowOffsetY = 2 * scale;
-    ctx.drawImage(hold, centerX - ((hold.width / scalar) / 2), bottomY, (hold.width / scalar), -(hold.height / scalar))
-    ctx.shadowColor = 'rgba(0, 0, 0, 0)';
-    ctx.drawImage(topLayer, 0, 0)
+    let height = Math.min(hold.height / 2, hold.width * .75);
+    // maintain aspect ratio
+    let width = (topLayer.width / topLayer.height) * height
+    ctx.drawImage(topLayer, 0, canvas.height - height - (height / 100 * 5), width, height)
 
     return true
 }
